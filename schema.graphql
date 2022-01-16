@@ -1,0 +1,40 @@
+type Speaker {
+  email: String!
+  firstname: String!
+  lastname: String!
+  picture: String
+  bio: String
+  talks: [Talk!] @relation
+}
+
+type Talk {
+  title: String!
+  description: String!
+  video_url: String!
+  speaker: Speaker!
+  comments: [Comment!] @relation
+}
+
+type Comment @protected(membership: "User", rule: ["read", "write", "create"]) {
+  content: String!
+  talk: Talk!
+  user: User!
+}
+
+type User @auth(primary: "email") {
+  email: String! @unique
+  username: String
+  comments: [Comment!] @relation
+}
+
+type Query {
+  talks: [Talk] # List of talks
+  speakers: [Speaker] # List of speakers
+}
+
+type Mutation {
+  search(
+    email: String!, 
+    password: String!
+  ): User @resolver(name: "Custom")
+}
