@@ -8,6 +8,9 @@ export const createAuthFunctions = async (authables: Authable[]) => {
   }
 
   const authModel = authables[0];
+  if(!authModel) { 
+    return;
+  }
   const primaryKey = authModel.args.find(a => a.name === 'primary');
 
   if(!primaryKey) {

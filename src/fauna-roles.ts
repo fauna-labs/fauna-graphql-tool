@@ -19,6 +19,9 @@ export const createAuthRoles = async (authables: Authable[], protectedModels: Pr
   }
 
   const authModel = authables[0]
+  if(!authModel) { 
+    return;
+  }
   const dir = 'fauna/roles'
   if (!fs.existsSync(dir)){
     await fs.mkdirSync(dir, { recursive: true });

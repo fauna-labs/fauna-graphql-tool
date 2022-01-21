@@ -22,6 +22,11 @@ export const createSchema = async (authables: Authable[]) => {
   }
 
   const authModel = authables[0];
+  if(!authModel) { 
+    await fs.writeFileSync('fauna/newschema.graphql', '');
+    console.log('No Auth Model Found');
+    return;
+  }
   const primaryKey = authModel.args.find(a => a.name === 'primary');
 
   if(!primaryKey) { 
