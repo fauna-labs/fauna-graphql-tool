@@ -130,6 +130,12 @@ export default {
         read: true,
         create: true,
       }
+    },
+    {
+      resource: q.Index("user_by_email"),
+      actions: {
+        read: true
+      }
     }
   ]
 }
