@@ -23,6 +23,7 @@ import { query as q } from "faunadb";
 
 export default {
   name: "Login${authModel.name}",
+  role: q.Role("LoginRole"),
   body:
   q.Query(
     q.Lambda(
@@ -50,6 +51,7 @@ import { query as q } from "faunadb";
 
 export default {
   name: "Register${authModel.name}",
+  role: q.Role("RegisterRole"),
   body:
   q.Query(
     q.Lambda(

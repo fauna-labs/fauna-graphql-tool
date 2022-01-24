@@ -117,5 +117,47 @@ export const createAuthRoles = async (authables: Authable[], protectedModels: Pr
     ]
   }
   `
+
+  const registerRole = `
+import { query as q } from "faunadb";
+
+export default {
+  name: "RegisterRole",
+  privileges: [
+    {
+      resource: q.Collection("${authModel.name}"),
+      actions: {
+        read: true,
+        create: true,
+      }
+    }
+  ]
+}
+  `;
+
+  const loginRole = `
+import { query as q } from "faunadb";
+
+export default {
+  name: "LoginRole",
+  privileges: [
+    {
+      resource: q.Collection("User"),
+      actions: {
+        read: true,
+      }
+    },
+    {
+      resource: q.Index("user_by_email"),
+      actions: {
+        read: true
+      }
+    }
+  ]
+}
+  `
+
   await fs.writeFileSync('fauna/roles/authRole.js', content)
+  await fs.writeFileSync('fauna/roles/registerRole.js', registerRole)
+  await fs.writeFileSync('fauna/roles/loginRole.js', loginRole)
 }
